@@ -6,36 +6,25 @@ export const CardContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     width: 500px;
-    height: 550px;
+    height: 500px;
     gap: 30px;
     border-radius: 5px;
     border: 1px solid var(--color-border-alt);
     background-color: var(--color-bg-alt-alt);
-    padding: 40px 0px;
+    padding: 30px 0px;
     user-select: none;
-
-    @media (max-width: 1300px) {
-        padding-top: 100px;
-        padding-bottom: 100px;
-        width: 100%;
-    }
 `;
 
 export const Title = styled.h1`
     width: 95%;
-    height: 0px;
+    height: 40px;
     text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     text-decoration: underline;
-    padding-top: 20px;
 `
 
 export const Subtitle = styled.p<{ $isError: boolean }>`
     width: 95%;
     height: 0px;
-    top: 20px;
     position: relative;
     text-align: center;
     display: flex;
@@ -51,7 +40,7 @@ export const InputGroup = styled.div`
     align-items: center;
     justify-content: center;
     width: 70%;
-    height: 250px;
+    height: 200px;
 `;
 
 export const ButtonGroup = styled.div`
