@@ -70,6 +70,7 @@ const FrameLogin = styled.div`
 `;
 // #endregion
 
+// #region Componente
 export default () => {
     const loginRef = useRef<HTMLDivElement>(null);
     const [buttonVisible, setButtonVisible] = useState(true);
@@ -106,3 +107,4 @@ export default () => {
         </Home>
     );
 }
+// #endregion

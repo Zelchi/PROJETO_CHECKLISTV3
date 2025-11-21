@@ -107,28 +107,15 @@ export default () => {
     const [error, setError] = useState("");
     const [warn, setWarn] = useState("");
 
+    // #region Handlers
     const handleSwitchTypeCard = () => {
         if (CardType == "login") return setCardType("register");
         if (CardType == "register") return setCardType("login");
         if (CardType == "recover") return setCardType("login");
     }
 
-    // Coloca os erros no aviso
-    useEffect(() => {
-        setWarn(error);
-    }, [error]);
-
-    // Limpa os avisos depois de 10 segundos
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setWarn("");
-            setError("");
-        }, 10000);
-        return () => clearTimeout(timer);
-    }, [warn, error]);
-
     // Limpa os avisos para dar os avisos de sucesso ou aviso de aviso
-    const aviso = (message: string) => {
+    const handleWarn = (message: string) => {
         setError("");
         setWarn(message);
     }
@@ -138,7 +125,7 @@ export default () => {
         try {
             setIsLoading(true);
             const res = await API.POST(Endpoints.AUTH_LOGIN, { email, password });
-            if (res.status === 200) {
+            if (res.status >= 200 && res.status <= 299) {
                 Coockie.setToken(res.data.token);
                 throw redirect({ to: '/' });
             } else {
@@ -160,8 +147,8 @@ export default () => {
         try {
             setIsLoading(true);
             const res = await API.POST(Endpoints.AUTH_REGISTER, { email, password });
-            if (res.status === 201) {
-                aviso("Conta criada com sucesso. Agora você pode entrar.");
+            if (res.status >= 200 && res.status <= 299) {
+                handleWarn("Conta criada com sucesso. Agora você pode entrar.");
                 setCardType("login");
             } else {
                 setError("Erro ao criar a conta.");
@@ -175,39 +162,66 @@ export default () => {
 
     const handleCodeReq = async () => {
         try {
+            setIsLoading(true);
             const res = await API.POST(Endpoints.AUTH_RECOVER, { email });
-            if (res.status === 200) {
-                aviso("Um código de recuperação foi enviado para o seu email.");
+            if (res.status >= 200 && res.status <= 299) {
+                handleWarn("Um código de recuperação foi enviado para o seu email.");
+                const codeInputInterval = setTimeout(() => {
+                    setShowCodeInput(true);
+                }, 6000);
+                return () => clearInterval(codeInputInterval);
             } else {
-
+                setError("Email não cadastrado.");
             }
         } catch {
             setError("Email não cadastrado.");
+        } finally {
+            setIsLoading(false);
         }
     }
 
     const handleRecover = async () => {
         try {
+            setIsLoading(true);
             const res = await API.POST(Endpoints.AUTH_RECOVER_COMFIRM, { email, code });
             if (res.status === 200) {
                 setCardType("switch_password");
             } else {
-
+                setError("Código inválido.");
             }
-        } catch { }
+        } catch {
+            setError("Código inválido.");
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     const handleSwitchPassword = async () => {
+        if (password !== passwordConfirm) {
+            setError("As senhas não coincidem.");
+            return;
+        }
         try {
-            const res = await API.POST(Endpoints.AUTH_RECOVER_COMFIRM, { email, code, password });
+            setIsLoading(true);
+            const res = await API.PUT(Endpoints.AUTH_RECOVER_COMFIRM, { email, code, password });
             if (res.status === 200) {
                 setCardType("login");
             } else {
-
+                setError("Erro ao alterar a senha.");
             }
-        } catch { };
+        } catch {
+            setError("Erro ao alterar a senha.");
+        } finally {
+            setIsLoading(false);
+        }
     }
+    // #endregion
 
+    // #region useEffects 
+    /*=============================================================================
+    useEffect para monitorar o email e enviar o código de recuperação automaticamente
+    quando o email for válido e o CardType for "recover", após 2 segundos de digitação.
+    ===============================================================================*/
     useEffect(() => {
         if (CardType !== "recover") return;
 
@@ -216,23 +230,45 @@ export default () => {
             const codeReqInterval = setTimeout(() => {
                 handleCodeReq();
             }, 2000);
-            const codeInputInterval = setTimeout(() => {
-                setShowCodeInput(true);
-            }, 6000);
 
-            return () => { clearInterval(codeInputInterval); clearInterval(codeReqInterval); };
+            return () => clearInterval(codeReqInterval);
         } else {
             setShowCodeInput(false);
         }
 
     }, [email]);
 
+    /*=============================================================================
+    useEffect para monitorar o código de recuperação e habilitar o botão de recuperação
+    quando o código tiver 6 ou mais caracteres e o CardType for "recover".
+    ===============================================================================*/
     useEffect(() => {
         if (CardType !== "recover") return;
         if (code.length >= 6) return setRecoverButtonDisabled(false);
         setRecoverButtonDisabled(true);
     }, [code]);
 
+    /*=============================================================================
+    useEffect para monitorar o estado de erro e atualizar o aviso (warn) com a mensagem
+    de erro sempre que o estado de erro for alterado.
+    ===============================================================================*/
+    useEffect(() => {
+        setWarn(error);
+    }, [error]);
+
+    /*=============================================================================
+    useEffect para limpar os avisos (warn) e erros após 3 segundos. 
+    ===============================================================================*/
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setWarn("");
+            setError("");
+        }, 3000);
+        return () => clearTimeout(timer);
+    }, [warn, error]);
+    // #endregion
+
+    // #region Renderização
     if (CardType == "login") {
         return (
             <CardContainer>
@@ -284,7 +320,7 @@ export default () => {
                 </InputGroup>
                 <ButtonGroup>
                     <RowGroup>
-                        <TextAchor onClick={() => setCardType("login")}>Voltar ao login</TextAchor>
+                        <TextAchor onClick={() => { setPassword(""); setPasswordConfirm(""); setCardType("login") }}>Voltar ao login</TextAchor>
                     </RowGroup>
                     <Button label="Enviar" action={handleRecover} disabled={recoverButtonDisabled} />
                 </ButtonGroup>
@@ -308,6 +344,7 @@ export default () => {
             </CardContainer>
         )
     }
+    // #endregion
 
     return null;
 }

@@ -1,5 +1,5 @@
 export const Endpoints = {
-    BACKEND_ADDRESS: 'http://localhost:3000',
+    BACKEND_ADDRESS: '',
     AUTH_LOGIN: '/auth/login',
     AUTH_REGISTER: '/auth/register',
     AUTH_RECOVER: '/auth/recover',

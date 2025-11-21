@@ -52,6 +52,7 @@ const FrameLogin = styled.div`
 `;
 // #endregion
 
+// #region Componente
 export default () => {
     return (
         <Home>
@@ -65,3 +66,4 @@ export default () => {
         </Home>
     )
 }
+// #endregion

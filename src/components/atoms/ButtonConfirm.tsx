@@ -10,19 +10,21 @@ const Button = styled.button`
     background: var(--color-accent);
     border: none;
     outline: none;
-    border-radius: 10px;
+    border-radius: 5px;
     transition: ease-in-out 100ms;
     font-family: "Delius", cursive;
+    box-shadow: none;
 
     &:hover {
         cursor: pointer;
-        transform: scale(1.01);
+        box-shadow: 3px 3px rgba(0, 0, 0, 0.5);
     }
 
     &:disabled {
         opacity: 0.6;
-        cursor: not-allowed;
+        cursor: default;
         transform: none;
+        box-shadow: none;
     }
 `
 
