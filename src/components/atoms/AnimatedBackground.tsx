@@ -64,12 +64,12 @@ export default function AnimatedFrame({
 
             angleRef.current = (angleRef.current + speed * 60 * delta) % 360;
 
-            const angle = angleRef.current;
+            const velocidadeAngular = angleRef.current;
 
-            const ax = Number((50 + Math.cos(angle * deg) * radius).toFixed(2));
-            const ay = Number((50 + Math.sin(angle * deg) * radius).toFixed(2));
-            const bx = Number((50 + Math.cos((angle + 180) * deg) * radius).toFixed(2));
-            const by = Number((50 + Math.sin((angle + 180) * deg) * radius).toFixed(2));
+            const ax = Number((50 + Math.cos(velocidadeAngular * deg) * radius).toFixed(2));
+            const ay = Number((50 + Math.sin(velocidadeAngular * deg) * radius).toFixed(2));
+            const bx = Number((50 + Math.cos((velocidadeAngular + 180) * deg) * radius).toFixed(2));
+            const by = Number((50 + Math.sin((velocidadeAngular + 180) * deg) * radius).toFixed(2));
 
             if (frameRef.current) {
                 frameRef.current.style.setProperty("--ax", `${ax}%`);
