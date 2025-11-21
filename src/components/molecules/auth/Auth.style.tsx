@@ -7,12 +7,15 @@ export const CardContainer = styled.div`
     justify-content: space-between;
     width: 500px;
     height: 500px;
-    gap: 30px;
     border-radius: 5px;
     border: 1px solid var(--color-border-alt);
     background-color: var(--color-bg-alt-alt);
     padding: 30px 0px;
     user-select: none;
+
+    @media (max-width: 1300px) {
+        width: 100%;
+    }
 `;
 
 export const Title = styled.h1`
@@ -32,6 +35,9 @@ export const Subtitle = styled.p<{ $isError: boolean }>`
     align-items: center;
     color: ${props => props.$isError ? 'var(--color-error)' : 'var(--color-success)'};
     font-size: 20px;
+    @media (max-width: 600px) {
+        font-size: 16px;
+    }
 `;
 
 export const InputGroup = styled.div`
@@ -69,5 +75,8 @@ export const TextAchor = styled.a`
     &:hover {
         cursor: pointer;
         color: var(--color-accent-hover);
+    }
+    @media (max-width: 600px) {
+        font-size: 16px;
     }
 `;
