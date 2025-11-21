@@ -1,0 +1,60 @@
+// Imports de estilos
+import { CardContainer, Title, Subtitle, InputGroup, ButtonGroup, RowGroup, TextAchor } from "./Auth.style";
+import Button from "../../atoms/ButtonConfirm";
+import Input from "../../atoms/LoginInput";
+
+// Imports React e API
+import { useState } from "react";
+import { redirect } from "@tanstack/react-router";
+import API, { Coockie } from "../../../utils/API";
+import { Endpoints } from '../../../utils/Endpoints';
+
+type Login = {
+    warn: string;
+    error: string;
+    setError: (message: string) => void;
+    handleSwitchTypeCard: () => void;
+    redirectCard: (type: "login" | "register" | "recover" | "switch_password") => void;
+}
+
+export default ({ setError, error, warn, handleSwitchTypeCard, redirectCard }: Login) => {
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleLogin = async () => {
+        try {
+            setIsLoading(true);
+            const res = await API.POST(Endpoints.AUTH_LOGIN, { email, password });
+            if (res.status >= 200 && res.status <= 299) {
+                Coockie.setToken(res.data.token);
+                throw redirect({ to: '/' });
+            } else {
+                setError("Erro ao entrar na conta.");
+            }
+        } catch {
+            setError("Erro ao entrar na conta.");
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    return (
+        <CardContainer>
+            <Title>Entrar na conta</Title>
+            <Subtitle $isError={error ? true : false}>{warn}</Subtitle>
+            <InputGroup>
+                <Input type="email" placeholder="Email" value={email} action={setEmail} />
+                <Input type="password" placeholder="Senha" value={password} action={setPassword} />
+            </InputGroup>
+            <ButtonGroup>
+                <RowGroup>
+                    <TextAchor onClick={() => handleSwitchTypeCard()}>Registre-se</TextAchor>
+                    <TextAchor onClick={() => { setEmail(""); redirectCard("recover") }}>Esqueceu sua senha?</TextAchor>
+                </RowGroup>
+                <Button label="Entrar" action={handleLogin} disabled={isLoading} />
+            </ButtonGroup>
+        </CardContainer>
+    )
+}
