@@ -23,23 +23,36 @@ export default ({ error, handleSwitchTypeCard, redirectCard, setError, warn, han
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [codeInput, setCodeInput] = useState(false);
+    const [code, setCode] = useState("");
 
-    const handleRegister = async () => {
-        if (password !== passwordConfirm) {
-            setError("As senhas não coincidem.");
-            return;
-        }
+    const handleCode = async () => {
         try {
             setIsLoading(true);
-            const res = await API.POST(ENDPOINT.AUTH_REGISTER, { username: email.split("@")[0], email, password });
+            const res = await API.POST(ENDPOINT.AUTH_EMAILS, { email });
             if (res.status >= 200 && res.status <= 299) {
-                handleWarn("Conta criada com sucesso. Agora você pode entrar.");
-                redirectCard("login");
-            } else {
-                setError("Erro ao criar a conta.");
+                handleWarn("Um código de recuperação foi enviado para o seu email.");
+                setCode("");
+                setCodeInput(true);
             }
         } catch {
-            setError("Erro ao criar a conta.");
+            setError("Email não cadastrado.");
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    const handleRegister = async () => {
+        try {
+            setIsLoading(true);
+            const username = email.split("@")[0];
+            const res = await API.POST(ENDPOINT.AUTH_REGISTER, { code, username, email, password });
+            if (res.status >= 200 && res.status <= 299) {
+                handleWarn("Conta criada com sucesso!");
+                redirectCard("login");
+            }
+        } catch {
+            setError("Código inválido.");
         } finally {
             setIsLoading(false);
         }
@@ -47,19 +60,34 @@ export default ({ error, handleSwitchTypeCard, redirectCard, setError, warn, han
 
     return (
         <CardContainer>
-            <Title>Criar uma nova conta</Title>
-            <Subtitle $isError={error ? true : false}>{warn}</Subtitle>
-            <InputGroup>
-                <Input type="email" placeholder="Email" value={email} action={setEmail} />
-                <Input type="password" placeholder="Senha" value={password} action={setPassword} />
-                <Input type="password" placeholder="Confirmar senha" value={passwordConfirm} action={setPasswordConfirm} />
-            </InputGroup>
-            <ButtonGroup>
-                <RowGroup>
-                    <TextAchor onClick={() => handleSwitchTypeCard()}>Voltar ao login</TextAchor>
-                </RowGroup>
-                <Button label="Criar conta" action={handleRegister} disabled={isLoading} />
-            </ButtonGroup>
+            {!codeInput && <>
+                <Title>Criar uma nova conta</Title>
+                <Subtitle $isError={error ? true : false}>{warn}</Subtitle>
+                <InputGroup>
+                    <Input type="email" placeholder="Email" value={email} action={setEmail} />
+                    <Input type="password" placeholder="Senha" value={password} action={setPassword} />
+                    <Input type="password" placeholder="Confirmar senha" value={passwordConfirm} action={setPasswordConfirm} />
+                </InputGroup>
+                <ButtonGroup>
+                    <RowGroup>
+                        <TextAchor onClick={() => handleSwitchTypeCard()}>Voltar ao login</TextAchor>
+                    </RowGroup>
+                    <Button label="Criar conta" action={handleCode} disabled={isLoading} />
+                </ButtonGroup>
+            </>}
+            {codeInput && <>
+                <Title>Codigo</Title>
+                <Subtitle $isError={error ? true : false}>{warn}</Subtitle>
+                <InputGroup>
+                    <Input type="text" placeholder="Código" value={code} action={setCode} />
+                </InputGroup>
+                <ButtonGroup>
+                    <RowGroup>
+                        <TextAchor onClick={() => setCodeInput(false)}>Voltar</TextAchor>
+                    </RowGroup>
+                    <Button label="Criar conta" action={handleRegister} disabled={isLoading} />
+                </ButtonGroup>
+            </>}
         </CardContainer>
     )
 }

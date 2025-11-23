@@ -3,6 +3,7 @@ export const ENDPOINT = {
     AUTH_LOGIN: '/login',
     AUTH_REGISTER: '/register',
     AUTH_ACCOUNT: '/users',
+    AUTH_EMAILS: '/emails',
     AUTH_RECOVER: '/recover',
     AUTH_RECOVER_COMFIRM: '/confirm',
     AUTH_SWITCH_PASSWORD: '/switch_password',

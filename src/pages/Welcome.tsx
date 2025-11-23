@@ -32,6 +32,7 @@ const Container = styled.main<{ $fade?: 'in' | 'out' }>`
     justify-content: center;
     height: 100%;
     width: 100%;
+    color: var(--color-text-invert);
     background-color: var(--color-bg-alt);
     animation: ${({ $fade }) =>
         $fade === 'out'
@@ -46,11 +47,11 @@ const Box = styled.div<{ $fade?: 'in' | 'out'; $shake?: boolean }>`
     justify-content: center;
     gap: 20px;
     padding: 20px;
-    border-radius: 10px;
     font-size: 30px;
-    color: var(--color-text-invert);
+    border-radius: 5px;
+    border: 1px solid var(--color-border-alt);
+    background-color: var(--color-bg-alt-alt);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid var(--color-bg);
     user-select: none;
     ${({ $fade, $shake }) => {
         if ($shake) {
