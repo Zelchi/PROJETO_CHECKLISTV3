@@ -64,6 +64,11 @@ const Box = styled.div<{ $fade?: 'in' | 'out'; $shake?: boolean }>`
         }
         return '';
     }}
+
+    @media (max-width: 1300px) {
+        font-size: 24px;
+        width: 90%;
+    }
 `;
 // #endregion
 // #region Componente
