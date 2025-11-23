@@ -36,7 +36,7 @@ const InputField = styled.input`
 
 type Input = {
     placeholder?: string;
-    type: string;
+    type: "text" | "password" | "email" | "number";
     value: string;
     action: (value: string) => void;
 }

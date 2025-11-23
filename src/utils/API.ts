@@ -50,6 +50,12 @@ class API {
         return { data: res.data, status: res.status };
     };
 
+    public PATCH = async (path: string, data: object) => {
+        this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getToken()}`;
+        const res = await this.route.patch(path, data);
+        return { data: res.data, status: res.status };
+    };
+
     public DELETE = async (path: string) => {
         this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getToken()}`;
         const res = await this.route.delete(path);

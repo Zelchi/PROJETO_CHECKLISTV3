@@ -7,17 +7,17 @@ const Button = styled.button`
     padding: 10px 14px;
     font-size: 15px;
     color: var(--color-text);
-    background: var(--color-accent);
+    background-color: var(--color-accent);
     border: none;
     outline: none;
     border-radius: 5px;
     transition: ease-in-out 100ms;
     font-family: "Delius", cursive;
-    box-shadow: none;
+    box-shadow: 3px 3px rgba(0, 0, 0, 0.5);
 
     &:hover {
         cursor: pointer;
-        box-shadow: 3px 3px rgba(0, 0, 0, 0.5);
+        background-color: var(--color-accent-hover);
     }
 
     &:disabled {

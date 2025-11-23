@@ -11,10 +11,10 @@ import Welcome from '../pages/Welcome'
 const isAuthenticated = () => Boolean(Cookies.get('token'));
 
 const isNameChanged = async () => {
-    const res = await API.GET(ENDPOINT.AUTH_ACCOUNT)
+    const res = await API.GET(`${ENDPOINT.AUTH_ACCOUNT}/${1}`)
 
-    const nome = res.data[0].username
-    const email = res.data[0].email.split("@")[0]
+    const nome = res.data.username
+    const email = res.data.email.split("@")[0]
 
     if (nome === email) return false
     return true;
