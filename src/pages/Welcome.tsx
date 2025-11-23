@@ -75,6 +75,7 @@ export default () => {
     const [hasMounted, setHasMounted] = useState(false);
     const navigate = useNavigate();
     const [containerFade, setContainerFade] = useState<'in' | 'out'>('in');
+    const [isNavigating, setIsNavigating] = useState(false);
 
     // Determina o estado do fade para o Box
     const getFade = () => {
@@ -113,6 +114,7 @@ export default () => {
     // Função para navegar para a página inicial com animação de fade out
     const handleNavigate = () => {
         setContainerFade('out');
+        setIsNavigating(true);
         setTimeout(() => {
             navigate({ to: '/' });
         }, 500);
@@ -120,7 +122,7 @@ export default () => {
 
     return (
         <Container $fade={containerFade}>
-            {!nameChanged && (
+            {!isNavigating && !nameChanged && (
                 <Box
                     $fade={getFade()}
                     $shake={shakeError}
@@ -130,7 +132,7 @@ export default () => {
                     <Button type="button" label='Confirmar' action={handleButton} />
                 </Box>
             )}
-            {nameChanged && !isFadingOut && (
+            {!isNavigating && nameChanged && !isFadingOut && (
                 <Box $fade="in">
                     <p>Bem-vindo, {name}!</p>
                     <Button type="button" label='Continuar' action={handleNavigate} />
