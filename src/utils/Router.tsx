@@ -1,10 +1,24 @@
 import { RouterProvider, createRootRoute, createRoute, createRouter, redirect } from '@tanstack/react-router'
 import Cookies from 'js-cookie'
-import Home from '../pages/Home.tsx'
-import Login from '../pages/Login.tsx'
+import { ENDPOINT } from './ENDPOINT.ts'
+import API from './API'
+
+import Home from '../pages/Home'
+import Login from '../pages/Login'
+import Welcome from '../pages/Welcome'
 
 // Verifico se o token do usuario está no coockie e transformo em Booleano real.
 const isAuthenticated = () => Boolean(Cookies.get('token'));
+
+const isNameChanged = async () => {
+    const res = await API.GET(ENDPOINT.AUTH_ACCOUNT)
+
+    const nome = res.data[0].username
+    const email = res.data[0].email.split("@")[0]
+
+    if (nome === email) return false
+    return true;
+}
 
 // Rota raiz
 const rootRoute = createRootRoute();
@@ -14,8 +28,9 @@ const routeHome = createRoute({
     getParentRoute: () => rootRoute,
     path: '/',
     component: Home,
-    beforeLoad: () => {
+    beforeLoad: async () => {
         if (!isAuthenticated()) throw redirect({ to: '/login' })
+        if (!(await isNameChanged())) throw redirect({ to: '/welcome' })
     },
 })
 
@@ -26,8 +41,18 @@ const routeLogin = createRoute({
     component: Login,
 })
 
+const routeWelcome = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/welcome',
+    component: Welcome,
+    beforeLoad: async () => {
+        if (!isAuthenticated()) throw redirect({ to: '/login' })
+        if (await isNameChanged()) throw redirect({ to: '/' })
+    },
+})
+
 // Adiciona as rotas filhas à rota raiz
-const routeTree = rootRoute.addChildren([routeHome, routeLogin])
+const routeTree = rootRoute.addChildren([routeHome, routeLogin, routeWelcome])
 
 // Cria o roteador com a árvore de rotas
 const router = createRouter({ routeTree })

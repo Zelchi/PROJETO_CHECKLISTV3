@@ -6,7 +6,7 @@ import Input from "../../atoms/LoginInput";
 // Imports React e API
 import API from "../../../utils/API";
 import { useState } from "react";
-import { Endpoints } from '../../../utils/Endpoints';
+import { ENDPOINT } from '../../../utils/ENDPOINT';
 
 type Register = {
     warn: string;
@@ -31,7 +31,7 @@ export default ({ error, handleSwitchTypeCard, redirectCard, setError, warn, han
         }
         try {
             setIsLoading(true);
-            const res = await API.POST(Endpoints.AUTH_REGISTER, { email, password });
+            const res = await API.POST(ENDPOINT.AUTH_REGISTER, { username: email.split("@")[0], email, password });
             if (res.status >= 200 && res.status <= 299) {
                 handleWarn("Conta criada com sucesso. Agora você pode entrar.");
                 redirectCard("login");

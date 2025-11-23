@@ -6,7 +6,7 @@ import Input from "../../atoms/LoginInput";
 // Imports React e API
 import API from "../../../utils/API";
 import { useState, useEffect } from "react";
-import { Endpoints } from '../../../utils/Endpoints';
+import { ENDPOINT } from '../../../utils/ENDPOINT';
 import styled from "styled-components";
 
 const CodeWrap = styled.div<{ $show: boolean }>`
@@ -46,7 +46,7 @@ export default ({ cardType, error, warn, redirectCard, handleWarn, setError }: R
     const handleCode = async () => {
         try {
             setIsLoading(true);
-            const res = await API.POST(Endpoints.AUTH_RECOVER, { email });
+            const res = await API.POST(ENDPOINT.AUTH_RECOVER, { email });
             if (res.status >= 200 && res.status <= 299) {
                 handleWarn("Um código de recuperação foi enviado para o seu email.");
                 const codeInputInterval = setTimeout(() => {
@@ -70,7 +70,7 @@ export default ({ cardType, error, warn, redirectCard, handleWarn, setError }: R
     const handleRecover = async () => {
         try {
             setIsLoading(true);
-            const res = await API.POST(Endpoints.AUTH_RECOVER_COMFIRM, { email, code });
+            const res = await API.POST(ENDPOINT.AUTH_RECOVER_COMFIRM, { email, code });
             if (res.status === 200) {
                 redirectCard("switch_password");
             } else {
@@ -94,7 +94,7 @@ export default ({ cardType, error, warn, redirectCard, handleWarn, setError }: R
         }
         try {
             setIsLoading(true);
-            const res = await API.PUT(Endpoints.AUTH_RECOVER_COMFIRM, { email, code, password });
+            const res = await API.PUT(ENDPOINT.AUTH_RECOVER_COMFIRM, { email, code, password });
             if (res.status === 200) {
                 redirectCard("login");
             } else {

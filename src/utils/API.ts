@@ -1,6 +1,6 @@
-import { Endpoints } from "./Endpoints";
-import axios from "axios";
+import { ENDPOINT } from "./ENDPOINT";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 // Classe estática para manipulação de cookies
 export class Coockie {
@@ -12,7 +12,7 @@ export class Coockie {
 // Classe para manipulação de requisições API utilizando o Axios.
 // Ela coloca o token de autenticação em cada requisição, automaticamente.
 class API {
-    private address = `${Endpoints.BACKEND_ADDRESS}/api/v1`;
+    private address = `${ENDPOINT.BACKEND_ADDRESS}`;
     private route = axios.create({ baseURL: `${this.address}` });
 
     public Auth = async (): Promise<Boolean> => {

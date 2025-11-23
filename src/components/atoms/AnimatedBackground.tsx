@@ -11,9 +11,7 @@ interface AnimatedFrameProps {
     children?: React.ReactNode;
 }
 
-const Frame = styled.div<{
-    $width?: string; $height?: string; $variant?: Variant;
-}>`
+const Frame = styled.div<{ $width?: string; $height?: string; $variant?: Variant }>`
     display: flex;
     flex-direction: column;
     align-items: center;

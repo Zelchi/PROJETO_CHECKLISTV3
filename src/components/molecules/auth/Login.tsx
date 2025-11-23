@@ -5,9 +5,9 @@ import Input from "../../atoms/LoginInput";
 
 // Imports React e API
 import { useState } from "react";
-import { redirect } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import API, { Coockie } from "../../../utils/API";
-import { Endpoints } from '../../../utils/Endpoints';
+import { ENDPOINT } from '../../../utils/ENDPOINT';
 
 type Login = {
     warn: string;
@@ -19,22 +19,24 @@ type Login = {
 
 export default ({ setError, error, warn, handleSwitchTypeCard, redirectCard }: Login) => {
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("batata@batata.com");
+    const [password, setPassword] = useState("123123");
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleLogin = async () => {
         try {
             setIsLoading(true);
-            const res = await API.POST(Endpoints.AUTH_LOGIN, { email, password });
+            const res = await API.POST(ENDPOINT.AUTH_LOGIN, { email, password });
             if (res.status >= 200 && res.status <= 299) {
-                Coockie.setToken(res.data.token);
-                throw redirect({ to: '/' });
-            } else {
-                setError("Erro ao entrar na conta.");
+                Coockie.setToken(res.data.accessToken);
+                console.log('Login realizado com sucesso!');
+                return navigate({ to: '/' });
             }
+
+            setError("Conta ou senha inválidos.");
         } catch {
-            setError("Erro ao entrar na conta.");
+            setError("Conta ou senha inválidos.");
         } finally {
             setIsLoading(false);
         }
