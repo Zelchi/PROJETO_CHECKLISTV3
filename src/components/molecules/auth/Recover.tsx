@@ -4,9 +4,8 @@ import Button from "../../atoms/ButtonConfirm";
 import Input from "../../atoms/LoginInput";
 
 // Imports React e API
-import API from "../../../utils/API";
+import API, { ENDPOINT } from "../../../utils/API";
 import { useState, useEffect } from "react";
-import { ENDPOINT } from '../../../utils/ENDPOINT';
 import styled from "styled-components";
 
 const CodeWrap = styled.div<{ $show: boolean }>`

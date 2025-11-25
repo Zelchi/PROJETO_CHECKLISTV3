@@ -1,7 +1,6 @@
 import { RouterProvider, createRootRoute, createRoute, createRouter, redirect } from '@tanstack/react-router'
 import Cookies from 'js-cookie'
-import { ENDPOINT } from './ENDPOINT.ts'
-import API from './API'
+import API, { ENDPOINT } from './API'
 
 import Home from '../pages/Home'
 import Login from '../pages/Login'

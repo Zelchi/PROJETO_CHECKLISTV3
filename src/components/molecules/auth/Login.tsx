@@ -6,8 +6,7 @@ import Input from "../../atoms/LoginInput";
 // Imports React e API
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import API, { Coockie } from "../../../utils/API";
-import { ENDPOINT } from '../../../utils/ENDPOINT';
+import API, { ENDPOINT, Coockie } from "../../../utils/API";
 
 type Login = {
     warn: string;

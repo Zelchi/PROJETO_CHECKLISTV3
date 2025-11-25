@@ -3,8 +3,7 @@ import styled, { keyframes, css } from 'styled-components';
 import Input from '../components/atoms/LoginInput';
 import Button from '../components/atoms/ButtonConfirm';
 import { useNavigate } from '@tanstack/react-router';
-import API from '../utils/API';
-import { ENDPOINT } from '../utils/ENDPOINT';
+import API, { ENDPOINT } from '../utils/API';
 
 // #region Animações
 const fadeIn = keyframes`

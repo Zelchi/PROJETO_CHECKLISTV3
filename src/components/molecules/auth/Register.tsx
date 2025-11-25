@@ -4,9 +4,8 @@ import Button from "../../atoms/ButtonConfirm";
 import Input from "../../atoms/LoginInput";
 
 // Imports React e API
-import API from "../../../utils/API";
+import API, { ENDPOINT } from "../../../utils/API";
 import { useState } from "react";
-import { ENDPOINT } from '../../../utils/ENDPOINT';
 
 type Register = {
     warn: string;
