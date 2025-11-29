@@ -1,17 +1,17 @@
-import GetName from '../../atoms/GetNameLabel';
 import styled from 'styled-components';
 import { Check } from "lucide-react";
+import GetName from '../../atoms/GetNameLabel';
 
-const Container = styled.main`
+const TopBar = styled.main`
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 60px;
+    min-height: 60px;
     font-size: 24px;
     padding: 0 20px;
-    background-color: var(--color-bg-alt-alt);
+    background-color: var(--color-bg-alt-alt-alt);
 
     @media (max-width: 400px) {
         padding: 0 10px;
@@ -29,7 +29,7 @@ const Main = styled.div`
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 10px; 
+        gap: 10px;
 
         h1 {
             font-size: 24px;
@@ -43,11 +43,20 @@ const Main = styled.div`
     @media (max-width: 800px) {
         width: 100%;
     }
+    @media (max-width: 600px) {
+        align-items: center;
+        text-align: center;
+        flex-direction: column;
+
+        div {
+            margin-left: -32px;
+        }
+    }
 `
 
 export default () => {
     return (
-        <Container>
+        <TopBar>
             <Main>
                 <div>
                     <Check size={32} color={"var(--color-accent)"} />
@@ -55,6 +64,6 @@ export default () => {
                 </div>
                 <GetName />
             </Main>
-        </Container>
+        </TopBar>
     )
 }

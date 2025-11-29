@@ -1,13 +1,15 @@
+// #region Imports
 import { useState, useEffect } from "react"
 import Desktop from "../components/templates/auth/Desktop";
 import Mobile from "../components/templates/auth/Mobile";
-
-// Função para obter as dimensões da janela
-const Window = () => {
+// #endregion
+// #region Scripts
+const Window = () => { // Função para obter as dimensões da janela
     const { innerWidth: width, innerHeight: height } = window;
     return { width, height };
 }
-
+// #endregion
+// #region Component
 export default () => {
 
     // Estado para armazenar as dimensões da janela
@@ -37,3 +39,4 @@ export default () => {
         </>
     )
 }
+// #endregion
