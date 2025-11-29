@@ -16,7 +16,6 @@ const TaskContainer = styled.div`
 
     &:hover {
         border-color: var(--color-accent);
-        transform: translateY(-2px);
     }
 `;
 
