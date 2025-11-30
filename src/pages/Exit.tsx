@@ -1,5 +1,5 @@
 // #region Imports
-import Layout from "../components/templates/NavbarLayout";
+import Layout from "#components/templates/NavbarLayout.tsx";
 // #endregion
 // #region Component
 export default () => {

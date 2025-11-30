@@ -3,15 +3,18 @@ import axios from "axios";
 
 // Definição dos endpoints da API
 export const ENDPOINT = {
-    BACKEND_ADDRESS: 'http://localhost:3000',
-    AUTH_LOGIN: '/login',
-    AUTH_REGISTER: '/register',
-    AUTH_REGISTER_CONFIRM: '/confirm',
+    BACKEND_ADDRESS: 'http://localhost:8000/api',
+
+    // AUTH REGION
+    AUTH_LOGIN: '/authentication/login/',
+    AUTH_REGISTER: '/authentication/register/',
+    // AUTH_REGISTER_CODE: '/authentication/verify-email/',
     AUTH_ACCOUNT: '/users',
-    AUTH_EMAILS: '/emails',
-    AUTH_RECOVER: '/recover',
-    AUTH_RECOVER_COMFIRM: '/confirm',
-    AUTH_SWITCH_PASSWORD: '/switch_password',
+    // AUTH_EMAILS: '/emails',
+    AUTH_RECOVER: '/authentication/forgot-password/',
+    AUTH_RECOVER_COMFIRM: '/authentication/verify-code/',
+    AUTH_SWITCH_PASSWORD: '/authentication/reset-password/',
+
     TASK_CRUD: '/tasks',
     DASHBOARD: '/dashboard',
 }
@@ -47,31 +50,41 @@ class API {
     };
 
     public GET = async (path: string) => {
-        this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getToken()}`;
+        if (Coockie.getToken()) {
+            this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getToken()}`;
+        }
         const res = await this.route.get(path);
         return { data: res.data, status: res.status };
     };
 
     public POST = async (path: string, data: object) => {
-        this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getToken()}`;
+        if (Coockie.getToken()) {
+            this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getToken()}`;
+        }
         const res = await this.route.post(path, data);
         return { data: res.data, status: res.status };
     };
 
     public PUT = async (path: string, data: object) => {
-        this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getToken()}`;
+        if (Coockie.getToken()) {
+            this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getToken()}`;
+        }
         const res = await this.route.put(path, data);
         return { data: res.data, status: res.status };
     };
 
     public PATCH = async (path: string, data: object) => {
-        this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getToken()}`;
+        if (Coockie.getToken()) {
+            this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getToken()}`;
+        }
         const res = await this.route.patch(path, data);
         return { data: res.data, status: res.status };
     };
 
     public DELETE = async (path: string) => {
-        this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getToken()}`;
+        if (Coockie.getToken()) {
+            this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getToken()}`;
+        }
         const res = await this.route.delete(path);
         return { data: res.data, status: res.status };
     };
