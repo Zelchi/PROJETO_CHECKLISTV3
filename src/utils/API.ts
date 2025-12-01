@@ -6,11 +6,11 @@ export const ENDPOINT = {
     BACKEND_ADDRESS: 'http://localhost:8000/api',
 
     // AUTH REGION
+    AUTH_REGISTER_CODE_SEND: '/authentication/register/send-code/',
+    AUTH_REGISTER_CODE_VERIFY: '/authentication/register/verify-code/',
+    AUTH_REGISTER: '/authentication/register/complete/',
     AUTH_LOGIN: '/authentication/login/',
-    AUTH_REGISTER: '/authentication/register/',
-    // AUTH_REGISTER_CODE: '/authentication/verify-email/',
     AUTH_ACCOUNT: '/users',
-    // AUTH_EMAILS: '/emails',
     AUTH_RECOVER: '/authentication/forgot-password/',
     AUTH_RECOVER_COMFIRM: '/authentication/verify-code/',
     AUTH_SWITCH_PASSWORD: '/authentication/reset-password/',

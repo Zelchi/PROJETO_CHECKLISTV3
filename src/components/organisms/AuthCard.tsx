@@ -49,7 +49,7 @@ export default () => {
         error={error}
         warn={warn}
         setError={setError}
-        handleWarn={handleWarn}
+        setWarn={handleWarn}
         handleSwitchTypeCard={handleSwitchTypeCard}
         redirectCard={setCardType}
     />)
@@ -59,7 +59,7 @@ export default () => {
         error={error}
         warn={warn}
         setError={setError}
-        handleWarn={handleWarn}
+        setWarn={handleWarn}
         redirectCard={setCardType}
     />)
 }

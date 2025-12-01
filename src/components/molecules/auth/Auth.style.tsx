@@ -49,6 +49,14 @@ export const InputGroup = styled.div`
     height: 200px;
 `;
 
+export const CodeWrap = styled.div<{ $show: boolean }>`
+    visibility: ${props => props.$show ? "visible" : "hidden"};
+    opacity: ${props => props.$show ? 1 : 0};
+    pointer-events: ${props => props.$show ? "auto" : "none"};
+    transition: opacity .2s ease;
+    width: 100%;
+`;
+
 export const ButtonGroup = styled.div`
     display: flex;
     flex-direction: column;

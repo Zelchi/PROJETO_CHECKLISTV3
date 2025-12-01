@@ -1,31 +1,22 @@
 // Imports de estilos
-import { CardContainer, Title, Subtitle, InputGroup, ButtonGroup, RowGroup, TextAchor } from "./Auth.style";
+import { CardContainer, Title, Subtitle, InputGroup, ButtonGroup, RowGroup, TextAchor, CodeWrap } from "./Auth.style";
 import Button from "../../atoms/ButtonConfirm";
 import Input from "../../atoms/LoginInput";
 
 // Imports React e API
 import API, { ENDPOINT } from "../../../utils/API";
 import { useState, useEffect } from "react";
-import styled from "styled-components";
-
-const CodeWrap = styled.div<{ $show: boolean }>`
-    visibility: ${props => props.$show ? "visible" : "hidden"};
-    opacity: ${props => props.$show ? 1 : 0};
-    pointer-events: ${props => props.$show ? "auto" : "none"};
-    transition: opacity .2s ease;
-    width: 100%;
-`;
 
 type Recover = {
     warn: string;
     error: string;
     cardType: "recover" | "switch_password";
     setError: (message: string) => void;
-    handleWarn: (message: string) => void;
+    setWarn: (message: string) => void;
     redirectCard: (type: "login" | "register" | "recover" | "switch_password") => void;
 }
 
-export default ({ cardType, error, warn, redirectCard, handleWarn, setError }: Recover) => {
+export default ({ cardType, error, warn, redirectCard, setWarn, setError }: Recover) => {
 
     // #region States
     const [email, setEmail] = useState("");
@@ -47,7 +38,7 @@ export default ({ cardType, error, warn, redirectCard, handleWarn, setError }: R
             setIsLoading(true);
             const res = await API.POST(ENDPOINT.AUTH_RECOVER, { email });
             if (res.status >= 200 && res.status <= 299) {
-                handleWarn("Um código de recuperação foi enviado para o seu email.");
+                setWarn("Um código de recuperação foi enviado para o seu email.");
                 const codeInputInterval = setTimeout(() => {
                     setShowCodeInput(true);
                 }, 6000);
