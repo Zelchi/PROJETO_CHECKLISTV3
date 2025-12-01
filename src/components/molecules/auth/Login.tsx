@@ -28,7 +28,9 @@ export default ({ setError, error, warn, handleSwitchTypeCard, redirectCard }: L
             setIsLoading(true);
             const res = await API.POST(ENDPOINT.AUTH_LOGIN, { email, password });
             if (res.status >= 200 && res.status <= 299) {
-                Coockie.setToken(res.data.accessToken);
+                Coockie.setAccess(res.data.access);
+                Coockie.setRefresh(res.data.refresh);
+                sessionStorage.setItem("noNameChanged", "true")
                 console.log('Login realizado com sucesso!');
                 return navigate({ to: '/' });
             }

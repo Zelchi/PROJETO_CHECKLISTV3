@@ -1,8 +1,7 @@
 import { RouterProvider, createRootRoute, createRoute, createRouter, redirect } from '@tanstack/react-router'
 import { Outlet } from "@tanstack/react-router";
 
-import Cookies from 'js-cookie'
-import API, { ENDPOINT } from './API'
+import { Coockie } from './API';
 
 import Home from '../pages/Home'
 import Login from '../pages/Login'
@@ -13,13 +12,14 @@ import Exit from '../pages/Exit'
 import NotFound from '../pages/NotFound'
 
 // helpers
-const isAuthenticated = () => Boolean(Cookies.get('token'));
+const isAuthenticated = () => (Boolean(Coockie.getAccess()) && Boolean(Coockie.getRefresh()))
 
 const isNameChanged = async () => {
-    const res = await API.GET(`${ENDPOINT.AUTH_ACCOUNT}/${1}`)
-    const nome = res.data.username
-    const email = res.data.email.split("@")[0]
-    return nome !== email
+    if (sessionStorage.getItem("noNameChanged")) {
+        return true;
+    } else {
+        return false
+    }
 }
 
 // root route

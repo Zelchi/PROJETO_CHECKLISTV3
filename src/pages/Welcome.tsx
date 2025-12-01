@@ -103,7 +103,7 @@ export default () => {
     // Função para lidar com o clique do botão de confirmação
     const handleButton = async () => {
         try {
-            const res = await API.PATCH(`${ENDPOINT.AUTH_ACCOUNT}/${1}`, { username: name });
+            const res = await API.PUT(`${ENDPOINT.AUTH_ACCOUNT}/${1}`, { username: name });
             if (res.status >= 200 && res.status <= 299) {
                 setIsFadingOut(true);
                 const time = setTimeout(() => {
