@@ -1,5 +1,5 @@
+import axios, { type AxiosInstance } from "axios";
 import Cookies from "js-cookie";
-import axios from "axios";
 
 // Definição dos endpoints da API
 export const ENDPOINT = {
@@ -10,7 +10,7 @@ export const ENDPOINT = {
     AUTH_REGISTER: '/authentication/register/complete/',
     AUTH_LOGIN: '/authentication/login/',
 
-    AUTH_ACCOUNT: '/users',
+    CHANGE_USERNAME: '/authentication/username/me/',
 
     AUTH_RECOVER: '/authentication/forgot-password/',
     AUTH_RECOVER_COMFIRM: '/authentication/verify-code/',
@@ -30,6 +30,13 @@ export class Coockie {
 
     public static removeAccess = () => Cookies.remove("access");
     public static removeRefresh = () => Cookies.remove("refresh");
+
+    public static setHeaderAuthorization = (route: AxiosInstance) => {
+        if (Coockie.getRefresh() && Coockie.getAccess()) {
+            route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getRefresh()}`;
+            route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getAccess()}`;
+        }
+    }
 }
 
 // Classe para manipulação de requisições API utilizando o Axios.
@@ -64,46 +71,31 @@ class API {
     };
 
     public GET = async (path: string) => {
-        if (Coockie.getRefresh() && Coockie.getAccess()) {
-            this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getRefresh()}`;
-            this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getAccess()}`;
-        }
+        Coockie.setHeaderAuthorization(this.route);
         const res = await this.route.get(path);
         return { data: res.data, status: res.status };
     };
 
     public POST = async (path: string, data: object) => {
-        if (Coockie.getRefresh() && Coockie.getAccess()) {
-            this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getRefresh()}`;
-            this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getAccess()}`;
-        }
+        Coockie.setHeaderAuthorization(this.route);
         const res = await this.route.post(path, data);
         return { data: res.data, status: res.status };
     };
 
     public PUT = async (path: string, data: object) => {
-        if (Coockie.getRefresh() && Coockie.getAccess()) {
-            this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getRefresh()}`;
-            this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getAccess()}`;
-        }
+        Coockie.setHeaderAuthorization(this.route);
         const res = await this.route.put(path, data);
         return { data: res.data, status: res.status };
     };
 
     public PATCH = async (path: string, data: object) => {
-        if (Coockie.getRefresh() && Coockie.getAccess()) {
-            this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getRefresh()}`;
-            this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getAccess()}`;
-        }
+        Coockie.setHeaderAuthorization(this.route);
         const res = await this.route.patch(path, data);
         return { data: res.data, status: res.status };
     };
 
     public DELETE = async (path: string) => {
-        if (Coockie.getRefresh() && Coockie.getAccess()) {
-            this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getRefresh()}`;
-            this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getAccess()}`;
-        }
+        Coockie.setHeaderAuthorization(this.route);
         const res = await this.route.delete(path);
         return { data: res.data, status: res.status };
     };

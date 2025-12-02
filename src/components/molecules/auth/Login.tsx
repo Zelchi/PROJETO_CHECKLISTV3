@@ -30,7 +30,10 @@ export default ({ setError, error, warn, handleSwitchTypeCard, redirectCard }: L
             if (res.status >= 200 && res.status <= 299) {
                 Coockie.setAccess(res.data.access);
                 Coockie.setRefresh(res.data.refresh);
-                sessionStorage.setItem("noNameChanged", "true")
+                if (!res.data.has_username) {
+                    sessionStorage.setItem("noNameChanged", "true")
+                }
+                localStorage.setItem("username", res.data.current_username)
                 console.log('Login realizado com sucesso!');
                 return navigate({ to: '/' });
             }

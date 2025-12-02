@@ -33,7 +33,7 @@ const routeHome = createRoute({
     component: Home,
     beforeLoad: async () => {
         if (!isAuthenticated()) throw redirect({ to: '/login' })
-        if (!(await isNameChanged())) throw redirect({ to: '/welcome' })
+        if (await isNameChanged()) throw redirect({ to: '/welcome' })
     },
 })
 
@@ -52,7 +52,7 @@ const routeWelcome = createRoute({
     component: Welcome,
     beforeLoad: async () => {
         if (!isAuthenticated()) throw redirect({ to: '/login' })
-        if (await isNameChanged()) throw redirect({ to: '/' })
+        if (!await isNameChanged()) throw redirect({ to: '/' })
     },
 })
 
