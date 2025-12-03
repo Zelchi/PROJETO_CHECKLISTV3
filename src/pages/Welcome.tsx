@@ -1,8 +1,8 @@
 // #region Imports
 import { useState } from 'react';
 import styled, { keyframes, css } from 'styled-components';
-import Input from '../components/atoms/LoginInput';
-import Button from '../components/atoms/ButtonConfirm';
+import Input from '../components/atoms/login/Login-Text-Field';
+import Button from '../components/atoms/buttons/Button-Confirm';
 import { useNavigate } from '@tanstack/react-router';
 import API, { ENDPOINT } from '../utils/API';
 // #endregion

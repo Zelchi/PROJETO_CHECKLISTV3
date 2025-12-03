@@ -1,7 +1,7 @@
 // Imports de estilos
 import { CardContainer, Title, Subtitle, InputGroup, ButtonGroup, RowGroup, TextAchor, CodeWrap } from "./Auth.style";
-import Button from "../../atoms/ButtonConfirm";
-import Input from "../../atoms/LoginInput";
+import Button from "../../atoms/buttons/Button-Confirm";
+import Input from "../../atoms/login/Login-Text-Field";
 
 // Imports React e API
 import API, { ENDPOINT } from "../../../utils/API";

@@ -1,5 +1,5 @@
-import TopBar from "../molecules/navbar/TopBar"
-import BottomBar from "../molecules/navbar/BottomBar"
+import TopBar from "../../molecules/navbar/TopBar"
+import BottomBar from "../../molecules/navbar/BottomBar"
 import styled from "styled-components";
 
 const Container = styled.div`

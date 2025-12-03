@@ -1,7 +1,7 @@
 // #region Imports
 import { useState, useEffect } from "react"
-import Desktop from "../components/templates/auth/Desktop";
-import Mobile from "../components/templates/auth/Mobile";
+import Desktop from "../components/templates/login/Desktop";
+import Mobile from "../components/templates/login/Mobile";
 // #endregion
 // #region Scripts
 const Window = () => { // Função para obter as dimensões da janela

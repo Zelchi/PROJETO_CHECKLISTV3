@@ -1,4 +1,4 @@
-import Button from '../../atoms/ButtonNavbar';
+import Button from '../../atoms/buttons/Button-Navbar';
 import styled from 'styled-components';
 import { Home, CalendarRange, Settings2 } from "lucide-react";
 import { useLocation } from '@tanstack/react-router';

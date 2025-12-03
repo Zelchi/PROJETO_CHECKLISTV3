@@ -1,7 +1,7 @@
 export type TaskType = {
     id: number;
-    title: string;
-    description: string;
-    status: string;
-    completed: boolean;
+    nome: string;
+    descricao: string;
+    feita: boolean;
+    created_at: string;
 }

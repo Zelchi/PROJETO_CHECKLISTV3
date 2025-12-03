@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
-import Login from "../molecules/auth/Login";
-import Register from '../molecules/auth/Register';
-import Recover from "../molecules/auth/Recover";
+import Login from "../../molecules/login/Login";
+import Register from '../../molecules/login/Register';
+import Recover from "../../molecules/login/Recover";
 
 // #region Componente
 export default () => {

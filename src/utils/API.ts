@@ -5,19 +5,19 @@ import Cookies from "js-cookie";
 export const ENDPOINT = {
     BACKEND_ADDRESS: 'http://localhost:8000/api',
 
-    AUTH_REGISTER_CODE_SEND: '/authentication/register/send-code/',
-    AUTH_REGISTER_CODE_VERIFY: '/authentication/register/verify-code/',
-    AUTH_REGISTER: '/authentication/register/complete/',
-    AUTH_LOGIN: '/authentication/login/',
+    AUTH_REGISTER_CODE_SEND: '/authentication/register/send-code',
+    AUTH_REGISTER_CODE_VERIFY: '/authentication/register/verify-code',
+    AUTH_REGISTER: '/authentication/register/complete',
+    AUTH_LOGIN: '/authentication/login',
 
-    CHANGE_USERNAME: '/authentication/username/me/',
+    CHANGE_USERNAME: '/authentication/username/me',
 
-    AUTH_RECOVER: '/authentication/forgot-password/',
-    AUTH_RECOVER_COMFIRM: '/authentication/verify-code/',
-    AUTH_SWITCH_PASSWORD: '/authentication/reset-password/',
+    AUTH_RECOVER: '/authentication/forgot-password',
+    AUTH_RECOVER_COMFIRM: '/authentication/verify-code',
+    AUTH_SWITCH_PASSWORD: '/authentication/reset-password',
 
     TASK_CRUD: '/tasks',
-    DASHBOARD: '/dashboard',
+    DASHBOARD: '/tasks/dashboard',
 }
 
 // Classe estática para manipulação de cookies
@@ -33,7 +33,6 @@ export class Coockie {
 
     public static setHeaderAuthorization = (route: AxiosInstance) => {
         if (Coockie.getRefresh() && Coockie.getAccess()) {
-            route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getRefresh()}`;
             route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getAccess()}`;
         }
     }
@@ -44,31 +43,6 @@ export class Coockie {
 class API {
     private address = `${ENDPOINT.BACKEND_ADDRESS}`;
     private route = axios.create({ baseURL: `${this.address}` });
-
-    public Auth = async (): Promise<Boolean> => {
-
-        const refresh = Coockie.getRefresh();
-        const access = Coockie.getAccess();
-
-        if (refresh && access) {
-            this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getRefresh()}`;
-            this.route.defaults.headers.common["Authorization"] = `Bearer ${Coockie.getAccess()}`;
-        }
-
-        if (refresh && access) {
-            try {
-                const { status } = await this.route.get(`${this.address}/account`);
-                if (status === 200) {
-                    return true;
-                }
-            } catch (error) {
-                Coockie.removeAccess();
-                Coockie.removeRefresh();
-                return false;
-            }
-        }
-        return false;
-    };
 
     public GET = async (path: string) => {
         Coockie.setHeaderAuthorization(this.route);

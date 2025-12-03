@@ -1,5 +1,5 @@
-import AnimatedBackground from "../../atoms/AnimatedBackground";
-import LoginCard from "../../organisms/AuthCard";
+import AnimatedBackground from "../../atoms/login/Animated-Background";
+import LoginCard from "../../organisms/login/AuthCard";
 import styled from "styled-components";
 
 // #region Styles

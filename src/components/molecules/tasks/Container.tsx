@@ -1,9 +1,11 @@
+//#region Imports
 import { useState } from "react";
 import styled from "styled-components";
 import { type TaskType } from "@/types/TaskType.ts";
-import CheckBox from "@/components/atoms/CheckBox.tsx";
-import ActionButton from "@/components/atoms/ButtonAction.tsx";
-
+import CheckBox from "@/components/atoms/task/CheckBox";
+import ActionButton from "@/components/atoms/buttons/Button-Action";
+//#endregion
+//#region Styles
 const TaskContainer = styled.div`
     display: flex;
     align-items: center;
@@ -71,7 +73,8 @@ type TaskProps = {
     onUpdate: (updatedTask: TaskType) => Promise<void | TaskType>;
     onDelete: (taskId: number) => void;
 };
-
+//#endregion
+//#region Component
 export default ({ task, onUpdate, onDelete }: TaskProps) => {
     const [isEditing, setIsEditing] = useState(false);
     const [localTask, setLocalTask] = useState<TaskType>(task);
@@ -80,9 +83,9 @@ export default ({ task, onUpdate, onDelete }: TaskProps) => {
     const [toggling, setToggling] = useState(false);
 
     const handleToggleCompleted = async () => {
-        const newValue = !localTask.completed;
+        const newValue = !localTask.feita;
 
-        const updated = { ...localTask, completed: newValue };
+        const updated = { ...localTask, feita: newValue };
         setLocalTask(updated);
 
         setToggling(true);
@@ -91,7 +94,7 @@ export default ({ task, onUpdate, onDelete }: TaskProps) => {
     };
 
     const handleSave = async () => {
-        if (!localTask.title || localTask.title.trim() === "") {
+        if (!localTask.nome || localTask.nome.trim() === "") {
             setError("Título é obrigatório");
             return;
         }
@@ -112,33 +115,33 @@ export default ({ task, onUpdate, onDelete }: TaskProps) => {
 
     return (
         <TaskContainer>
-            <CheckBox completed={localTask.completed} onToggle={handleToggleCompleted} />
+            <CheckBox completed={localTask.feita} onToggle={handleToggleCompleted} />
 
             <TaskInfo>
                 {!isEditing ? (
                     <>
-                        <TaskTitle $done={localTask.completed}>
-                            {localTask.title}
+                        <TaskTitle $done={localTask.feita}>
+                            {localTask.nome}
                         </TaskTitle>
 
-                        {localTask.description && (
-                            <TaskDescription $done={localTask.completed}>
-                                {localTask.description}
+                        {localTask.descricao && (
+                            <TaskDescription $done={localTask.feita}>
+                                {localTask.descricao}
                             </TaskDescription>
                         )}
                     </>
                 ) : (
                     <>
                         <Input
-                            value={localTask.title}
+                            value={localTask.nome}
                             onChange={(e) =>
-                                setLocalTask({ ...localTask, title: e.target.value })
+                                setLocalTask({ ...localTask, nome: e.target.value })
                             }
                         />
                         <TextArea
-                            value={localTask.description ?? ""}
+                            value={localTask.descricao ?? ""}
                             onChange={(e) =>
-                                setLocalTask({ ...localTask, description: e.target.value })
+                                setLocalTask({ ...localTask, descricao: e.target.value })
                             }
                             rows={3}
                         />
@@ -185,3 +188,4 @@ export default ({ task, onUpdate, onDelete }: TaskProps) => {
         </TaskContainer>
     );
 }
+//#endregion

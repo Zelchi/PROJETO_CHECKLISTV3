@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Check } from "lucide-react";
-import GetName from '../../atoms/GetNameLabel';
+import GetName from '../../atoms/navbar/Name-Label';
 
 const TopBar = styled.main`
     display: flex;

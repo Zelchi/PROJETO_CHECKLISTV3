@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
-import Button from "../atoms/ButtonConfirm";
-import API, { ENDPOINT } from "../../utils/API";
+import Button from "@/components/atoms/buttons/Button-Confirm";
+import API, { ENDPOINT } from "@/utils/API";
 
 const LoadingSpinner = styled.div`
     border: 4px solid var(--color-border-alt);
@@ -83,9 +83,10 @@ export default ({ setSync }: AddTasksProps) => {
     const handleSubmit = async () => {
         setLoading(true);
         try {
-            await API.POST(ENDPOINT.TASK_CRUD, {
-                title: name,
-                description: description
+            await API.POST(ENDPOINT.TASK_CRUD + "/", {
+                nome: name,
+                descricao: description,
+                feita: false
             })
             setSync(true);
             setName("");

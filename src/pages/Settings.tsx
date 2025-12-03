@@ -1,7 +1,7 @@
 // #region Imports
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import Layout from "../components/templates/NavbarLayout";
+import Layout from "../components/templates/navbar/Layout";
 import { Coockie } from "@/utils/API";
 import { useNavigate } from "@tanstack/react-router";
 // #endregion

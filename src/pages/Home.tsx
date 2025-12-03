@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import API, { ENDPOINT } from "../utils/API";
-import Layout from "../components/templates/NavbarLayout";
+import Layout from "../components/templates/navbar/Layout";
 import {
     PieChart,
     Pie,

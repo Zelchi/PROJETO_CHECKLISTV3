@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import API, { ENDPOINT } from "../../utils/API.ts";
-import Task from "../molecules/tasks/Container.tsx";
-import { type TaskType } from "../../types/TaskType.ts";
+import Task from "@/components/molecules/tasks/Container.tsx";
+import { type TaskType } from "@/types/TaskType";
+import API, { ENDPOINT } from "@/utils/API";
 
 const Container = styled.div`
     display: flex;
@@ -88,15 +88,12 @@ export default ({ sync, setSync }: ViewTasks) => {
     // ---------------------------------------------------------
     const handleUpdateTask = async (updatedTask: TaskType) => {
         try {
-            await API.PUT(`${ENDPOINT.TASK_CRUD}/${updatedTask.id}`, updatedTask);
-
-            // Atualização otimista local
+            await API.PATCH(`${ENDPOINT.TASK_CRUD}/${updatedTask.id}`, updatedTask);
             setTasks((prevTasks) =>
                 prevTasks.map((task) =>
                     task.id === updatedTask.id ? updatedTask : task
                 )
             );
-
         } catch (error) {
             console.error("Erro ao atualizar a task:", error);
         }
@@ -107,16 +104,11 @@ export default ({ sync, setSync }: ViewTasks) => {
     // ---------------------------------------------------------
     const handleDeleteTask = async (taskId: number) => {
         const oldState = tasks;
-
-        // remove otimista
         setTasks((prev) => prev.filter((t) => t.id !== taskId));
-
         try {
             await API.DELETE(`${ENDPOINT.TASK_CRUD}/${taskId}`);
         } catch (error) {
             console.error("Erro ao deletar task:", error);
-
-            // rollback caso dê erro
             setTasks(oldState);
         }
     };
